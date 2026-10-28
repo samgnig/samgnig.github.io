@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Personal Tesla Fleet API key host</title>
+<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:2rem auto;padding:0 1rem}
+code,textarea{font-family:ui-monospace,monospace}textarea{width:100%;height:7rem}</style></head>
+<body>
+<h1>Personal Tesla Fleet API app</h1>
+<p>Hosts the public key at
+<a href="/.well-known/appspecific/com.tesla.3p.public-key.pem"><code>/.well-known/appspecific/com.tesla.3p.public-key.pem</code></a>
+for a single-owner, read-only integration.</p>
+<div id="cb" hidden>
+<h2>OAuth callback</h2>
+<p id="msg"></p>
+<p>Copy this <b>full URL</b> and paste it into <code>c_exchange_code.py</code> within a few minutes (the code expires quickly):</p>
+<textarea id="full" readonly></textarea>
+<p>Code only: <code id="code"></code></p>
+</div>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search);
+  if(!p.has('code') && !p.has('error')) return;
+  document.getElementById('cb').hidden=false;
+  if(p.has('error')){document.getElementById('msg').textContent='Error: '+p.get('error')+' '+(p.get('error_description')||'');}
+  document.getElementById('full').value=location.href;
+  document.getElementById('code').textContent=p.get('code')||'';
+})();
+</script>
+</body></html>
